@@ -12,10 +12,22 @@ namespace Solution
         {
             //SnakeCase();
             //ClimbLeaderboard();
+
+            //Week of Code 27
+            //https://www.hackerrank.com/contests/w27/challenges
             //DrawingBook();
             TailorShop();
         }
 
+        /// <summary>
+        /// https://www.hackerrank.com/contests/w27/challenges/tailor-shop
+        /// Constraints:
+        /// 1 <= n,p,a_i <= 10^5
+        /// Time complexity:
+        /// O(n), where n = clusters, assuming bool array lookup is O(1)
+        /// Space complexity:
+        /// O(1), constant if constraints do not change
+        /// </summary>
         private static void TailorShop()
         {
             string[] tokens_n = Console.ReadLine().Split(' ');
@@ -26,6 +38,7 @@ namespace Solution
             // your code goes here
 
             int buttons = 0;
+            //Because input can never be > 10^5, and values are only decreased, initialize memory array that can contain all possible values
             bool[] memory = new bool[100000];
             int clusters = n;
             int price = p;
@@ -43,11 +56,23 @@ namespace Solution
             Console.WriteLine(buttons);
         }
 
+        /// <summary>
+        /// https://www.hackerrank.com/contests/w27/challenges/drawing-book
+        /// Constraints: 
+        /// 1 <= n <= 10^5
+        /// 1 <= p <= n
+        /// Time complexity:
+        /// O(1)
+        /// Space complexity:
+        /// O(1)
+        /// </summary>
         private static void DrawingBook()
         {
             int n = Convert.ToInt32(Console.ReadLine());
             int p = Convert.ToInt32(Console.ReadLine());
             // your code goes here
+
+            //Can simplify problem if assume pages are even, (2,3) is same as (2,-)
             if(n % 2 == 1)
             {
                 n--;
@@ -56,6 +81,8 @@ namespace Solution
             {
                 p--;
             }
+
+            //Find distance to edges, start counting from smallest side
             int leftbound = (0 - p) * -1;
             int rightbound = n - p;
             if(rightbound < leftbound)
@@ -77,9 +104,6 @@ namespace Solution
             string[] alice_temp = Console.ReadLine().Split(' ');
             int[] alice = Array.ConvertAll(alice_temp, Int32.Parse);
             // your code goes here
-            n = 7;
-            scores = new int[] { 100, 100, 50, 40, 40, 20, 10 };
-            //
             int score = 0;
             for (int i = 0; i < m; i++)
             {
