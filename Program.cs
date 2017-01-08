@@ -23,6 +23,11 @@ namespace Solution
             CommonApplication();
         }
 
+        /// <summary>
+        /// This function will recursively sort and find all substrings in the input to guarantee they are all grouped consecutively
+        /// </summary>
+        /// <param name="input"></param>
+        /// <param name="substrings"></param>
         private static void FindSubstring(string input, ref List<string> substrings)
         {
             char marker = input[0];
@@ -59,6 +64,14 @@ namespace Solution
             substrings.Add(sb.ToString());
         }
 
+        /// <summary>
+        /// My common application submitted on Jan.7 2017. 
+        /// Objective: In a string of 0's and 1's, find all substrings of consecutive 0's and 1's where the numbers of 0's equals the number of 1's and return the count
+        /// Example: 00110 = 0011, 01, 10 == 3; 10101 = 10, 01, 10, 01 == 4
+        /// Bug: Bug in code detected when transferring from IDE to HackerRank where "input = Console.ReadLine();"
+        /// Comments: I noticed late in the submission that StringBuilder was not a supported class in HackerRanks envrionment, so I had to quickly change to an '+' operator.
+        ///     This would create an entirely new string in memory and is not an ideal solution, can be improved.
+        /// </summary>
         private static void CommonApplication()
         {
             /*
@@ -85,6 +98,8 @@ namespace Solution
                         ones++;
                     }
                 }
+                // Because substrings have already been sorted to be consecutive, the only examples of substrings would fall under '01' or '10'
+                // All other patterns would just append more 0's or 1's at the front or end '0011', '0000011', '1110' etc.
                 if(zeroes >= ones)
                 {
                     counter += ones;
