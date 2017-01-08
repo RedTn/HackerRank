@@ -20,7 +20,7 @@ namespace Solution
             //HackonacciMatrix();
 
             //Common application
-            CommonApplication();
+            CountingBinarySubstrings();
         }
 
         /// <summary>
@@ -72,7 +72,7 @@ namespace Solution
         /// Comments: I noticed late in the submission that StringBuilder was not a supported class in HackerRanks envrionment, so I had to quickly change to an '+' operator.
         ///     This would create an entirely new string in memory and is not an ideal solution, can be improved.
         /// </summary>
-        private static void CommonApplication()
+        private static void CountingBinarySubstrings()
         {
             /*
              * Complete the function below.
