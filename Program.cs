@@ -16,7 +16,219 @@ namespace Solution
             //Week of Code 27
             //https://www.hackerrank.com/contests/w27/challenges
             //DrawingBook();
-            TailorShop();
+            //TailorShop();
+            //HackonacciMatrix();
+
+            //Common application
+            CommonApplication();
+        }
+
+        private static void FindSubstring(string input, ref List<string> substrings)
+        {
+            char marker = input[0];
+            string sb = String.Empty;
+            bool hasChanged = false;
+            int indexAtChange = 0;
+            for (int i = 0; i < input.Length; i++)
+            {
+                char index = input[i];
+                if (index != marker)
+                {
+                    if (!hasChanged)
+                    {
+                        indexAtChange = i;
+                        hasChanged = true;
+                        marker = index;
+                        sb += index;
+                    }
+                    else
+                    {
+                        if (indexAtChange < input.Length)
+                        {
+                            string sub = input.Substring(indexAtChange, input.Length - indexAtChange);
+                            FindSubstring(sub, ref substrings);
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    sb += index;
+                }
+            }
+            substrings.Add(sb.ToString());
+        }
+
+        private static void CommonApplication()
+        {
+            /*
+             * Complete the function below.
+             */
+            List<string> substrings = new List<string>();
+            string input;
+            input = Console.ReadLine();
+
+            FindSubstring(input, ref substrings);
+            int counter = 0;
+            foreach(string substring in substrings)
+            {
+                int zeroes = 0;
+                int ones = 0;
+                for(int i = 0; i < substring.Length; i++)
+                {
+                    if(substring[i] == '0')
+                    {
+                        zeroes++;
+                    }
+                    else
+                    {
+                        ones++;
+                    }
+                }
+                if(zeroes >= ones)
+                {
+                    counter += ones;
+                }
+                else
+                {
+                    counter += zeroes;
+                }
+            }
+            Console.WriteLine(counter);
+        }
+
+        private static void HackonacciMatrix()
+        {
+            Dictionary<int, int> map = new Dictionary<int, int>();
+            int rightAngleResult = 0;
+            int straightAngleResult = 0;
+            int counter = 0;
+
+            string[] tokens_n = Console.ReadLine().Split(' ');
+            int n = Convert.ToInt32(tokens_n[0]);
+            int q = Convert.ToInt32(tokens_n[1]);
+
+            bool[,] matrix = new bool[n, n];
+            ConstructHackonacci(n, ref matrix, ref map);
+            int[] angles = new int[q];
+
+            for (int a0 = 0; a0 < q; a0++)
+            {
+                int angle = Convert.ToInt32(Console.ReadLine());
+                // your code goes here
+                angles[a0] = angle;
+            }
+
+            bool[,] rightAngle = RotateHackonacci(matrix, n);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if(matrix[i,j] != rightAngle[i,j])
+                    {
+                        counter++;
+                    }
+                }
+            }
+            rightAngleResult = counter;
+
+            counter = 0;
+            bool[,] straightAngle = RotateHackonacci(rightAngle, n);
+            for (int i = 0; i < n; i++)
+            {
+                for (int j = 0; j < n; j++)
+                {
+                    if (matrix[i, j] != straightAngle[i, j])
+                    {
+                        counter++;
+                    }
+                }
+            }
+            straightAngleResult = counter;
+
+            foreach(int angle in angles)
+            {
+                int currentAngle = angle % 360;
+                if(currentAngle == 0)
+                {
+                    Console.WriteLine(0);
+                }
+                else if(currentAngle == 90 || currentAngle == 270)
+                {
+                    Console.WriteLine(rightAngleResult);
+                }
+                else
+                {
+                    Console.WriteLine(straightAngleResult);
+                }
+            }
+        }
+
+        
+
+        static bool[,] RotateHackonacci(bool[,]matrix, int size)
+        {
+            bool[,] ret = new bool[size, size];
+
+            for (int i = 0; i < size; ++i)
+            {
+                for (int j = 0; j < size; ++j)
+                {
+                    ret[i, j] = matrix[size - j - 1, i];
+                }
+            }
+
+            return ret;
+        }
+
+        static void ConstructHackonacci(int size, ref bool[,] matrix, ref Dictionary<int, int> map)
+        {
+            for(int i = 0; i < size; i++)
+            {
+                for(int j = 0; j < size; j++)
+                {
+                    if (Hackonacci((i+1) * (i+1) * (j+1) * (j+1), ref map) % 2 == 1)
+                    {
+                        matrix[i, j] = true;
+                    }
+                }
+            }
+        }
+
+        static int Hackonacci(int input, ref Dictionary<int, int> map)
+        {
+            switch(input)
+            {
+                case 1:
+                    return 1;
+                case 2:
+                    return 2;
+                case 3:
+                    return 3;
+                default:
+                    {
+                        if(map.ContainsKey(input))
+                        {
+                            return map[input];
+                        }
+                        map.Add(input, Hackonacci(input-1, ref map) + 2 * Hackonacci(input - 2, ref map) + 3 * Hackonacci(input - 3, ref map));
+                        return map[input];
+                    }
+                    
+            }
+        }
+
+        //Not to submit
+        private static void DebugMatrix(bool[,] matrix, int size)
+        {
+            for (int i = 0; i < size; i++)
+            {
+                for (int j = 0; j < size; j++)
+                {
+                    Console.Write("{0} ", Convert.ToInt32(matrix[i, j]));
+                }
+                Console.WriteLine();
+            }
         }
 
         /// <summary>
