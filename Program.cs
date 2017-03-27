@@ -10,17 +10,184 @@ namespace Solution
     {
         static void Main(string[] args)
         {
+            #region Practice
+            //Practice
             //SnakeCase();
             //ClimbLeaderboard();
+            #endregion
 
-            //Week of Code 27
+            #region TODO
+            //TODO
+            //JourneyToMoon();
+            //StringPermutation();
+
+            //HashSetTest();
+            #endregion
+
+            #region Week of Code 27
             //https://www.hackerrank.com/contests/w27/challenges
             //DrawingBook();
             //TailorShop();
             //HackonacciMatrix();
 
             //Common application
-            CountingBinarySubstrings();
+            //CountingBinarySubstrings();
+            #endregion
+
+            #region CTCI solutions
+            //LLSum();
+            LLSumReverse();
+            #endregion
+        }
+
+        /// <summary>
+        ///FOLLOW UP
+        ///Suppose the digits are stored in forward order.Repeat the above problem.
+        ///Input: (6 -> 1 -> 7) + (2 -> 9 -> 5).Thatis,617 + 295.
+        ///Output: 9 - > 1 - > 2. That is, 912.
+        /// </summary>
+        private static void LLSumReverse()
+        {
+            LinkedListNode p = new LinkedListNode();
+            LinkedListNode q = new LinkedListNode();
+            p = LinkedListNode.GenerateList(new List<int> { 7, 1, 6 });
+            q = LinkedListNode.GenerateList(new List<int> { 1, 5, 9, 2 });
+
+            bool blank;
+            LinkedListNode current = LinkedListSumReverse(p, q, out blank);
+            Console.WriteLine(current);
+        }
+
+        private static LinkedListNode LinkedListSumReverse(LinkedListNode n, LinkedListNode m, out bool carry)
+        {
+            bool thiscarry = false;
+            LinkedListNode current = new LinkedListNode();
+            int sum = 0;
+            int n_length = LinkedListNode.GetLength(n);
+            int m_length = LinkedListNode.GetLength(m);
+
+            if(n_length < m_length)
+            {
+                n = LinkedListNode.Pad(n, m_length - n_length);
+            }
+            if(m_length < n_length)
+            {
+                m = LinkedListNode.Pad(m, n_length - m_length);
+            }
+
+            if(n.Next != null || m.Next != null)
+            {
+                current.Next = LinkedListSumReverse(n.Next, m.Next, out thiscarry);
+            }
+            
+            if (n != null)
+            {
+                sum += n.Val;
+            }
+
+            if (m != null)
+            {
+                sum += m.Val;
+            }
+
+            if(thiscarry)
+            {
+                sum++;
+            }
+
+            current.Val = sum % 10;
+            carry = sum >= 10;
+            return current;
+        }
+
+        /// <summary>
+        /// 2.5
+        /// Sum Lists: You have two numbers represented by a linked list, where each node contains a single
+        ///digit.The digits are stored in reverse order, such that the 1 's digit is at the head of the list. Write a
+        ///function that adds the two numbers and returns the sum as a linked list.
+        ///EXAMPLE
+        ///Input: (7-> 1 -> 6) + (5 -> 9 -> 2) .Thatis,617 + 295.
+        ///Output: 2 - > 1 - > 9. That is, 912.
+        /// </summary>
+        private static void LLSum()
+        {
+            LinkedListNode p = new LinkedListNode();
+            LinkedListNode q = new LinkedListNode();
+            p = LinkedListNode.GenerateList(new List<int> { 7, 1, 6 });
+            q = LinkedListNode.GenerateList(new List<int> { 1, 5, 9, 2 });
+
+            LinkedListNode current = LinkedListSum(p, q, false);
+            Console.WriteLine(current.ToString());
+        }
+
+        private static LinkedListNode LinkedListSum(LinkedListNode n, LinkedListNode m, bool carry)
+        {
+            LinkedListNode current = new LinkedListNode();
+            int n_val = 0;
+            int m_val = 0;
+            bool action = false;
+
+            if(n != null)
+            {
+                action = true;
+                n_val = n.Val;
+            }
+
+            if(m != null)
+            {
+                action = true;
+                m_val = m.Val;
+            }
+
+            if(action || carry)
+            {
+                int sum = n_val + m_val + (carry ? 1 : 0);
+                current.Val = sum % 10;
+                if(n?.Next != null || m?.Next != null || sum >= 10)
+                {
+                    current.Next = LinkedListSum(n?.Next, m?.Next, sum >= 10);
+                }
+            }
+
+            return current;
+        }
+
+        private static void HashSetTest()
+        {
+            HashSet<string> mem = new HashSet<string>();
+
+            mem.Add("test");
+            mem.Add("test2");
+
+            Console.WriteLine(mem.Contains("test"));
+            Console.WriteLine(mem.Contains("test3"));
+
+        }
+
+        private static void StringPermutation()
+        {
+            Console.WriteLine("Input string");
+            string input = Console.ReadLine();
+        }
+
+        private static void JourneyToMoon()
+        {
+            string[] init = Console.ReadLine().Split(' ');
+            int n = Convert.ToInt32(init[0]);
+            int p = Convert.ToInt32(init[1]);
+            List<int[]> pairs = new List<int[]>();
+            for (int i = 0; i < p; i++)
+            {
+                string[] temp = Console.ReadLine().Split(' ');
+                int[] pair = Array.ConvertAll(temp, Int32.Parse);
+                pairs.Add(pair);
+            }
+            int result = 0;
+            while(pairs.Count > 1)
+            {
+                
+            }
+            Console.WriteLine(result);
         }
 
         /// <summary>
