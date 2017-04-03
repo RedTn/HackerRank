@@ -14,6 +14,7 @@ namespace Solution
             //Practice
             //SnakeCase();
             //ClimbLeaderboard();
+            Cache();
             #endregion
 
             #region TODO
@@ -38,6 +39,11 @@ namespace Solution
             //LLSum();
             LLSumReverse();
             #endregion
+        }
+
+        private static void Cache()
+        {
+            LRUCache<int, bool> cache = new LRUCache<int, bool>(5);
         }
 
         /// <summary>

@@ -13,7 +13,7 @@ namespace Solution
 
         public LinkedListNode()
         {
-
+            
         }
 
         public LinkedListNode(int val)
