@@ -8,10 +8,16 @@ namespace Solution
 {
     public class LRUCache<TypeKey, TypeValue>
     {
-        Dictionary<TypeKey, LinkedListNode<TypeValue>> map = new Dictionary<TypeKey, LinkedListNode<TypeValue>>();
-        LinkedList<TypeValue> list = new LinkedList<TypeValue>();
-        LinkedListNode<TypeValue> head = null;
-        LinkedListNode<TypeValue> tail = null;
+        public class LinkedListNode
+        {
+            public TypeValue Value { get; set; }
+            public LinkedListNode Next { get; set; }
+            public LinkedListNode Previous { get; set; }
+        }
+
+        Dictionary<TypeKey, LinkedListNode> map = new Dictionary<TypeKey, LinkedListNode>();
+        LinkedListNode head = null;
+        LinkedListNode tail = null;
         public int Capacity { get; set; }
 
         public LRUCache(int capacity = 10)
@@ -22,16 +28,20 @@ namespace Solution
         public bool TryGetValue(TypeKey key, out TypeValue value)
         {
             value = default(TypeValue);
-            LinkedListNode<TypeValue> entry;
+            LinkedListNode entry;
             if (!map.TryGetValue(key, out entry)) return false;
             MoveToHead(entry);
             value = entry.Value;
             return true;
         }
 
-        public void MoveToHead(LinkedListNode<TypeValue> node)
+        public void MoveToHead(LinkedListNode node)
         {
-
+            if (head == null || head == node)
+            {
+                tail = head;
+                return;
+            }
         }
     }
 }
