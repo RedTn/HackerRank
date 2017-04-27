@@ -14,7 +14,7 @@ namespace Solution
             //Practice
             //SnakeCase();
             //ClimbLeaderboard();
-            //Cache();
+            Cache();
             #endregion
 
             #region TODO
@@ -43,21 +43,7 @@ namespace Solution
 
         private static void Cache()
         {
-            LRUCache<int, int> cache = new LRUCache<int, int>(5);
-            int temp;
-            cache.TryGetValue(5, out temp);
-            Console.WriteLine(temp);
-            cache.Set(5, 5);
-            cache.Set(3, 3);
-            cache.Set(1, 1);
-            cache.Set(2, 2);
-            cache.Set(9, 9);
-            cache.Set(8, 8);
-            cache.Set(7, 7);
-            cache.TryGetValue(9, out temp);
-            Console.WriteLine(temp);
-            cache.Set(14, 14);
-            cache.Debug();
+            LRUCache<int, bool> cache = new LRUCache<int, bool>(5);
         }
 
         /// <summary>
